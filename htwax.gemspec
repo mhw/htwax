@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Mark H. Wilkinson']
   spec.email         = ['mhw@dangerous-techniques.com']
   spec.summary       = %q{An experimental HTTP client for APIs.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.description   = %q{An experimental HTTP client for APIs.}
   spec.homepage      = ''
   spec.license       = 'MIT'
 
