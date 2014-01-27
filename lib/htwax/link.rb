@@ -1,15 +1,21 @@
 module HtWax
   class Link
-    def initialize
-      @arguments = {}
+    def initialize(args = {})
+      @preset = args
+      reset
     end
 
     def []=(key, value)
-      @arguments[key] = value
+      @arguments[key.to_sym] = value
     end
 
     def [](key)
-      @arguments[key]
+      key = key.to_sym unless key.nil?
+      @arguments[key] || @preset[key]
+    end
+
+    def reset
+      @arguments = {}
     end
   end
 end
