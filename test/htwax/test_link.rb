@@ -45,6 +45,27 @@ module HtWax
       end
     end
 
+    describe 'initialize' do
+      it 'can be initialized from a hash' do
+        l = Link.new({ one: '1', two: '2' })
+        l[:one].must_equal '1'
+        l[:two].must_equal '2'
+      end
+
+      it 'takes a copy of the hash passed to it' do
+        h = { one: '1', two: '2' }
+        l = Link.new(h)
+        h[:three] = '3'
+        l[:three].must_be_nil
+      end
+
+      it 'can be initialized using strings as keys' do
+        l = Link.new({ 'one' => '1', 'two' => '2' })
+        l[:one].must_equal '1'
+        l[:two].must_equal '2'
+      end
+    end
+
     describe 'reset' do
       it 'allows preset values to be set and cleared' do
         q[:q] = 'REST'

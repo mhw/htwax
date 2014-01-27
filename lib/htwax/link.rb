@@ -1,7 +1,11 @@
 module HtWax
   class Link
     def initialize(args = {})
-      @preset = args
+      preset = {}
+      args.each_pair do |k, v|
+        preset[k.to_sym] = v
+      end
+      @preset = preset
       reset
     end
 
