@@ -5,7 +5,7 @@ require 'htwax/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "htwax"
-  spec.version       = Htwax::VERSION
+  spec.version       = HtWax::VERSION
   spec.authors       = ["Mark H. Wilkinson"]
   spec.email         = ["mhw@dangerous-techniques.com"]
   spec.summary       = %q{An experimental HTTP client for APIs.}

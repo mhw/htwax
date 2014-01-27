@@ -1,4 +1,4 @@
-# Htwax
+# HtWax
 
 TODO: Write a gem description
 

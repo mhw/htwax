@@ -1,5 +1,5 @@
 require "htwax/version"
 
-module Htwax
+module HtWax
   # Your code goes here...
 end
