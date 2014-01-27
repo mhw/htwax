@@ -15,7 +15,11 @@ module HtWax
 
     def [](key)
       key = key.to_sym unless key.nil?
-      @arguments[key] || @preset[key]
+      if @arguments.has_key?(key)
+        @arguments[key]
+      else
+        @preset[key]
+      end
     end
 
     def empty?

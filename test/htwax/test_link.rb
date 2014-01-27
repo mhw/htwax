@@ -28,6 +28,11 @@ module HtWax
         link[:arg2].must_equal 'another value'
         link['arg2'].must_equal 'another value'
       end
+
+      it 'allows presets to be cleared' do
+        q[:q] = nil
+        q[:q].must_be_nil
+      end
     end
 
     describe 'empty?' do
