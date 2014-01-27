@@ -30,8 +30,22 @@ module HtWax
       end
     end
 
-    describe 'reset' do
+    describe 'empty?' do
+      it 'returns false when arguments set' do
+        q.empty?.must_equal false
+      end
 
+      it 'returns true when no arguments set' do
+        link.empty?.must_equal true
+      end
+
+      it 'changes when new values are added' do
+        link[:n] = 'v'
+        link.empty?.must_equal false
+      end
+    end
+
+    describe 'reset' do
       it 'allows preset values to be set and cleared' do
         q[:q] = 'REST'
         q[:q].must_equal 'REST'

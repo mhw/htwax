@@ -14,6 +14,10 @@ module HtWax
       @arguments[key] || @preset[key]
     end
 
+    def empty?
+      @arguments.empty? && @preset.empty?
+    end
+
     def reset
       @arguments = {}
     end
