@@ -1,12 +1,19 @@
+require 'uri/common'
+
 module HtWax
   class Link
-    def initialize(args = {})
+    def initialize(uri, args = {})
+      @uri = uri
       preset = {}
       args.each_pair do |k, v|
         preset[k.to_sym] = v
       end
       @preset = preset
       reset
+    end
+
+    def base
+      @uri
     end
 
     def []=(key, value)
@@ -28,6 +35,15 @@ module HtWax
 
     def reset
       @arguments = {}
+    end
+
+    def to_s
+      query = URI.encode_www_form(@preset.merge(@arguments))
+      if query.empty?
+        @uri
+      else
+        @uri + '?' + query
+      end
     end
   end
 end
