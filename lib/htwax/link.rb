@@ -56,7 +56,7 @@ module HtWax
     end
 
     def to_s
-      query = URI.encode_www_form(@preset.merge(@arguments))
+      query = URI.encode_www_form(each)
       if query.empty?
         @uri
       else
