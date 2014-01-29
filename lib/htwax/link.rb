@@ -42,12 +42,14 @@ module HtWax
     end
 
     def each_key
+      return enum_for(:each_key) unless block_given?
       keys.each do |key|
         yield key
       end
     end
 
     def each
+      return enum_for(:each) unless block_given?
       keys.each do |key|
         yield key, self[key]
       end

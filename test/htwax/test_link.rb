@@ -149,6 +149,11 @@ module HtWax
         many[:six] = '6'
         collect_from_each_key(many).must_equal %i(one two three four five six)
       end
+
+      it 'returns an enumerator if passed no block' do
+        many.each_key.must_be_kind_of Enumerator
+        many.each_key.entries.must_equal %i(one two three four five)
+      end
     end
 
     describe 'each' do
@@ -166,6 +171,20 @@ module HtWax
         many[:three] = 'three'
         many[:six] = '6'
         collect_keys_and_values_from_each(many).must_equal [
+          [:one,   '1'],
+          [:two,   '2'],
+          [:three, 'three'],
+          [:four,  '4'],
+          [:five,  '5'],
+          [:six,   '6'],
+        ]
+      end
+
+      it 'returns an enumerator if passed no block' do
+        many[:three] = 'three'
+        many[:six] = '6'
+        many.each.must_be_kind_of Enumerator
+        many.each.entries.must_equal [
           [:one,   '1'],
           [:two,   '2'],
           [:three, 'three'],
