@@ -224,6 +224,16 @@ module HtWax
       it 'converts a link with parameters correctly' do
         q.to_s.must_equal 'https://www.google.co.uk/search?q=htwax'
       end
+
+      it 'converts additional parameters into query' do
+        q[:lang] = 'en'
+        q.to_s.must_equal 'https://www.google.co.uk/search?q=htwax&lang=en'
+      end
+
+      it 'removes nil parameters from query' do
+        q[:q] = nil
+        q.to_s.must_equal 'https://www.google.co.uk/search'
+      end
     end
   end
 end
