@@ -37,6 +37,22 @@ module HtWax
       @arguments = {}
     end
 
+    def keys
+      (@preset.keys + (@arguments.keys - @preset.keys))
+    end
+
+    def each_key
+      keys.each do |key|
+        yield key
+      end
+    end
+
+    def each
+      keys.each do |key|
+        yield key, self[key]
+      end
+    end
+
     def to_s
       query = URI.encode_www_form(@preset.merge(@arguments))
       if query.empty?

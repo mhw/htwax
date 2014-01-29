@@ -4,6 +4,22 @@ module HtWax
   describe Link do
     let(:link) { Link.new('http://localhost/') }
     let(:q)    { Link.new('https://www.google.co.uk/search', q: 'htwax') }
+    let(:many) do
+      Link.new('http://localhost/',
+               one: '1', two: '2', three: '3', four: '4', five: '5')
+    end
+
+    def collect_keys(link)
+      keys = []
+      link.each_key {|k| keys << k }
+      keys
+    end
+
+    def collect_keys_and_values(link)
+      keys_and_values = []
+      link.each {|k, v| keys_and_values << [k, v] }
+      keys_and_values
+    end
 
     describe 'base' do
       it 'returns the URI without the query part' do
@@ -100,6 +116,63 @@ module HtWax
         q.reset
         q[:q].must_equal 'htwax'
         q[:arg].must_be_nil
+      end
+    end
+
+    describe 'keys' do
+      it 'returns each key from the presets in order' do
+        link.keys.must_equal []
+        q.keys.must_equal %i(q)
+        many.keys.must_equal %i(one two three four five)
+      end
+
+      it 'returns additional keys after preset keys' do
+        many[:six] = '6'
+        many[:seven] = '7'
+        many.keys.must_equal %i(one two three four five six seven)
+      end
+
+      it 'returns each key only once' do
+        many[:three] = 'three'
+        many[:six] = '6'
+        many.keys.must_equal %i(one two three four five six)
+      end
+    end
+
+    describe 'each_key' do
+      it 'yields each key from the presets in order' do
+        collect_keys(many).must_equal %i(one two three four five)
+      end
+
+      it 'yields each key from the presets, then any additional arguments' do
+        many[:three] = 'three'
+        many[:six] = '6'
+        collect_keys(many).must_equal %i(one two three four five six)
+      end
+    end
+
+    describe 'each' do
+      it 'yields each key-value from the presets' do
+        collect_keys_and_values(many).must_equal [
+          [:one,   '1'],
+          [:two,   '2'],
+          [:three, '3'],
+          [:four,  '4'],
+          [:five,  '5'],
+        ]
+      end
+
+      it 'yields each key-value from the presets, then any additional arguments' do
+        many[:three] = 'three'
+        many[:six] = '6'
+        collect_keys_and_values(many).must_equal [
+          [:one,   '1'],
+          [:two,   '2'],
+          [:three, 'three'],
+          [:four,  '4'],
+          [:five,  '5'],
+          [:six,   '6'],
+        ]
       end
     end
 
