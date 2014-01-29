@@ -9,13 +9,13 @@ module HtWax
                one: '1', two: '2', three: '3', four: '4', five: '5')
     end
 
-    def collect_keys(link)
+    def collect_from_each_key(link)
       keys = []
       link.each_key {|k| keys << k }
       keys
     end
 
-    def collect_keys_and_values(link)
+    def collect_keys_and_values_from_each(link)
       keys_and_values = []
       link.each {|k, v| keys_and_values << [k, v] }
       keys_and_values
@@ -141,19 +141,19 @@ module HtWax
 
     describe 'each_key' do
       it 'yields each key from the presets in order' do
-        collect_keys(many).must_equal %i(one two three four five)
+        collect_from_each_key(many).must_equal %i(one two three four five)
       end
 
       it 'yields each key from the presets, then any additional arguments' do
         many[:three] = 'three'
         many[:six] = '6'
-        collect_keys(many).must_equal %i(one two three four five six)
+        collect_from_each_key(many).must_equal %i(one two three four five six)
       end
     end
 
     describe 'each' do
       it 'yields each key-value from the presets' do
-        collect_keys_and_values(many).must_equal [
+        collect_keys_and_values_from_each(many).must_equal [
           [:one,   '1'],
           [:two,   '2'],
           [:three, '3'],
@@ -165,7 +165,7 @@ module HtWax
       it 'yields each key-value from the presets, then any additional arguments' do
         many[:three] = 'three'
         many[:six] = '6'
-        collect_keys_and_values(many).must_equal [
+        collect_keys_and_values_from_each(many).must_equal [
           [:one,   '1'],
           [:two,   '2'],
           [:three, 'three'],
