@@ -30,7 +30,7 @@ module HtWax
     end
 
     def empty?
-      @arguments.empty? && @preset.empty?
+      keys.empty?
     end
 
     def reset

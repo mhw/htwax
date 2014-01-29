@@ -71,6 +71,11 @@ module HtWax
         link[:n] = 'v'
         link.empty?.must_equal false
       end
+
+      it 'allows nil arguments to override presets' do
+        q[:q] = nil
+        q.empty?.must_equal true
+      end
     end
 
     describe 'initialize' do
