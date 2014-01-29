@@ -38,7 +38,14 @@ module HtWax
     end
 
     def keys
-      (@preset.keys + (@arguments.keys - @preset.keys))
+      nil_argument_keys = @arguments.inject([]) do |keys, (k, v)|
+        if v.nil?
+          keys << k
+        else
+          keys
+        end
+      end
+      (@preset.keys - nil_argument_keys) + (@arguments.keys - nil_argument_keys - @preset.keys)
     end
 
     def each_key

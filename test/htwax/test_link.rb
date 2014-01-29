@@ -137,6 +137,11 @@ module HtWax
         many[:six] = '6'
         many.keys.must_equal %i(one two three four five six)
       end
+
+      it 'does not return keys that have been overridden' do
+        q[:q] = nil
+        q.keys.must_equal []
+      end
     end
 
     describe 'each_key' do
@@ -177,6 +182,17 @@ module HtWax
           [:four,  '4'],
           [:five,  '5'],
           [:six,   '6'],
+        ]
+      end
+
+      it 'nil arguments override presets' do
+        many[:one] = nil
+        many[:three] = nil
+        many[:five] = nil
+        many[:six] = nil
+        collect_keys_and_values_from_each(many).must_equal [
+          [:two,   '2'],
+          [:four,  '4'],
         ]
       end
 
