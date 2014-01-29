@@ -2,14 +2,27 @@ require 'uri/common'
 
 module HtWax
   class Link
-    def initialize(uri, args = {})
-      @uri = uri
-      preset = {}
-      args.each_pair do |k, v|
-        preset[k.to_sym] = v
+    def initialize(*args)
+      if args.last.is_a?(Hash)
+        @preset = symbolize_keys(args.pop)
+      else
+        @preset = {}
       end
-      @preset = preset
+      case args.length
+      when 1
+        @method = :get
+        @uri = args[0]
+      when 2
+        @method = args[0].to_sym
+        @uri = args[1]
+      else
+        raise ArgumentError, "no URI passed to Link#new"
+      end
       reset
+    end
+
+    def method
+      @method
     end
 
     def base
@@ -70,5 +83,13 @@ module HtWax
         @uri + '?' + query
       end
     end
+
+    private
+      def symbolize_keys(hash)
+        hash.inject({}) do |m, (k, v)|
+          m[k.to_sym] = v
+          m
+        end
+      end
   end
 end

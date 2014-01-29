@@ -79,6 +79,18 @@ module HtWax
     end
 
     describe 'initialize' do
+      it 'raises an error if no arguments passed' do
+        proc {
+          l = Link.new()
+        }.must_raise(ArgumentError)
+      end
+
+      it 'raises an error if too many arguments passed' do
+        proc {
+          l = Link.new(:get, 'http://localhost/', 'extra')
+        }.must_raise(ArgumentError)
+      end
+
       it 'can be initialized with a URI' do
         l = Link.new('https://www.google.co.uk/search')
         l.base.must_equal 'https://www.google.co.uk/search'
@@ -90,6 +102,19 @@ module HtWax
         l.base.must_equal 'http://localhost/'
         l[:one].must_equal '1'
         l[:two].must_equal '2'
+      end
+
+      it 'can be initialized with a method and a URI' do
+        l = Link.new(:get, 'http://localhost/')
+        l.method.must_equal :get
+        l.base.must_equal 'http://localhost/'
+      end
+
+      it 'can be initialized with a method, URI and hash' do
+        l = Link.new(:post, 'https://www.google.co.uk/search', lang: 'en')
+        l.method.must_equal :post
+        l.base.must_equal 'https://www.google.co.uk/search'
+        l[:lang].must_equal 'en'
       end
 
       it 'takes a copy of the hash passed to it' do
