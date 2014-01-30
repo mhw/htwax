@@ -60,21 +60,21 @@ module HtWax
 
     describe 'empty?' do
       it 'returns false when arguments set' do
-        q.empty?.must_equal false
+        q.wont_be_empty
       end
 
       it 'returns true when no arguments set' do
-        link.empty?.must_equal true
+        link.must_be_empty
       end
 
       it 'changes when new values are added' do
         link[:n] = 'v'
-        link.empty?.must_equal false
+        link.wont_be_empty
       end
 
       it 'allows nil arguments to override presets' do
         q[:q] = nil
-        q.empty?.must_equal true
+        q.must_be_empty
       end
     end
 
@@ -94,7 +94,7 @@ module HtWax
       it 'can be initialized with a URI' do
         l = Link.new('https://www.google.co.uk/search')
         l.base.must_equal 'https://www.google.co.uk/search'
-        l.empty?.must_equal true
+        l.must_be_empty
       end
 
       it 'can be initialized with a URI and a hash' do
