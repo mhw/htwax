@@ -21,6 +21,18 @@ module HtWax
       keys_and_values
     end
 
+    describe 'method' do
+      it 'returns the http method when defaulted' do
+        link.method.must_equal :get
+        q.method.must_equal :get
+      end
+
+      it 'returns the http method when explicitly set' do
+        l = Link.new(:post, 'https://www.google.co.uk/search', lang: 'en')
+        l.method.must_equal :post
+      end
+    end
+
     describe 'base' do
       it 'returns the URI without the query part' do
         link.base.must_equal 'http://localhost/'
