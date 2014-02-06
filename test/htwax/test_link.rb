@@ -282,5 +282,15 @@ module HtWax
         q.to_s.must_equal 'https://www.google.co.uk/search'
       end
     end
+
+    describe 'new_request' do
+      it 'builds a Request object with a bare URI' do
+        req = link.new_request
+
+        req.must_be_kind_of Request
+        req.method.must_equal link.method
+        req.uri.must_equal 'http://localhost/'
+      end
+    end
   end
 end

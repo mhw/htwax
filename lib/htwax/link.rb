@@ -90,6 +90,10 @@ module HtWax
       end
     end
 
+    def new_request
+      Request.new(@method, self.to_s)
+    end
+
     private
       def symbolize_keys(hash)
         hash.inject({}) do |m, (k, v)|
