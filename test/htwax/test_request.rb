@@ -10,5 +10,16 @@ module HtWax
         r.uri.must_equal 'http://localhost/'
       end
     end
+
+    let(:req) { Request.new(:get, 'http://localhost/') }
+
+    describe 'go' do
+      it 'returns the Response' do
+        response = req.go
+
+        response.must_be_kind_of Response
+        response.request.must_be_same_as req
+      end
+    end
   end
 end

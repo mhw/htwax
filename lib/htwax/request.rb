@@ -6,5 +6,9 @@ module HtWax
     end
 
     attr_reader :request_method, :uri
+
+    def go
+      Response.new(self)
+    end
   end
 end
