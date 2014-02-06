@@ -295,7 +295,7 @@ module HtWax
 
         req.must_be_kind_of Request
         req.request_method.must_equal link.request_method
-        req.uri.must_equal 'http://localhost/'
+        req.uri.must_equal link.to_uri
       end
     end
   end
