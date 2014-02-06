@@ -21,15 +21,15 @@ module HtWax
       keys_and_values
     end
 
-    describe 'method' do
+    describe 'request_method' do
       it 'returns the http method when defaulted' do
-        link.method.must_equal :get
-        q.method.must_equal :get
+        link.request_method.must_equal :get
+        q.request_method.must_equal :get
       end
 
       it 'returns the http method when explicitly set' do
         l = Link.new(:post, 'https://www.google.co.uk/search', lang: 'en')
-        l.method.must_equal :post
+        l.request_method.must_equal :post
       end
     end
 
@@ -126,15 +126,15 @@ module HtWax
         l[:two].must_equal '2'
       end
 
-      it 'can be initialized with a method and a URI' do
+      it 'can be initialized with an http method and a URI' do
         l = Link.new(:get, 'http://localhost/')
-        l.method.must_equal :get
+        l.request_method.must_equal :get
         l.base.must_equal 'http://localhost/'
       end
 
-      it 'can be initialized with a method, URI and hash' do
+      it 'can be initialized with an http method, URI and hash' do
         l = Link.new(:post, 'https://www.google.co.uk/search', lang: 'en')
-        l.method.must_equal :post
+        l.request_method.must_equal :post
         l.base.must_equal 'https://www.google.co.uk/search'
         l[:lang].must_equal 'en'
       end
@@ -288,7 +288,7 @@ module HtWax
         req = link.new_request
 
         req.must_be_kind_of Request
-        req.method.must_equal link.method
+        req.request_method.must_equal link.request_method
         req.uri.must_equal 'http://localhost/'
       end
     end

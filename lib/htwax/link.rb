@@ -10,10 +10,10 @@ module HtWax
       end
       case args.length
       when 1
-        @method = :get
+        @request_method = :get
         @uri = args[0]
       when 2
-        @method = args[0].to_sym
+        @request_method = args[0].to_sym
         @uri = args[1]
       else
         raise ArgumentError, "no URI passed to Link#new"
@@ -21,9 +21,7 @@ module HtWax
       reset
     end
 
-    def method
-      @method
-    end
+    attr_reader :request_method
 
     def base
       @uri
@@ -91,7 +89,7 @@ module HtWax
     end
 
     def new_request
-      Request.new(@method, self.to_s)
+      Request.new(@request_method, self.to_s)
     end
 
     private
