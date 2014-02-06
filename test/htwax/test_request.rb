@@ -15,10 +15,14 @@ module HtWax
 
     describe 'go' do
       it 'returns the Response' do
+        stub = stub_request(:get, 'http://localhost/')
+
         response = req.go
 
+        stub.must_have_been_requested
         response.must_be_kind_of Response
         response.request.must_be_same_as req
+        response.status_code.must_equal 200
       end
     end
   end

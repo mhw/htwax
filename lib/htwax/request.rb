@@ -8,7 +8,7 @@ module HtWax
     attr_reader :request_method, :uri
 
     def go
-      Response.new(self)
+      Response.new(self, Net::HTTP.get_response(URI(uri)))
     end
   end
 end
