@@ -42,6 +42,12 @@ module HtWax
       end
     end
 
+    def update(values = {})
+      values.each_pair do |k, v|
+        self[k] = v
+      end
+    end
+
     def empty?
       keys.empty?
     end

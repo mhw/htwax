@@ -70,6 +70,16 @@ module HtWax
       end
     end
 
+    describe 'update' do
+      it 'sets multiple values at the same time' do
+        link.update(arg1: '1', arg2: '2', 'arg3' => '3')
+
+        link[:arg1].must_equal '1'
+        link[:arg2].must_equal '2'
+        link[:arg3].must_equal '3'
+      end
+    end
+
     describe 'empty?' do
       it 'returns false when arguments set' do
         q.wont_be_empty
