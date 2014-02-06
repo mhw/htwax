@@ -79,7 +79,7 @@ module HtWax
       end
     end
 
-    def to_s
+    def to_uri
       query = URI.encode_www_form(each)
       if query.empty?
         @uri
@@ -87,6 +87,8 @@ module HtWax
         @uri + '?' + query
       end
     end
+
+    alias :to_s :to_uri
 
     def new_request
       Request.new(@request_method, self.to_s)

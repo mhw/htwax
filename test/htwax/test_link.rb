@@ -263,23 +263,29 @@ module HtWax
       end
     end
 
-    describe 'to_s' do
+    describe 'to_uri' do
       it 'converts a bare URI to itself' do
-        link.to_s.must_equal 'http://localhost/'
+        link.to_uri.must_equal 'http://localhost/'
       end
 
       it 'converts a link with parameters correctly' do
-        q.to_s.must_equal 'https://www.google.co.uk/search?q=htwax'
+        q.to_uri.must_equal 'https://www.google.co.uk/search?q=htwax'
       end
 
       it 'converts additional parameters into query' do
         q[:lang] = 'en'
-        q.to_s.must_equal 'https://www.google.co.uk/search?q=htwax&lang=en'
+        q.to_uri.must_equal 'https://www.google.co.uk/search?q=htwax&lang=en'
       end
 
       it 'removes nil parameters from query' do
         q[:q] = nil
-        q.to_s.must_equal 'https://www.google.co.uk/search'
+        q.to_uri.must_equal 'https://www.google.co.uk/search'
+      end
+    end
+
+    describe 'to_s' do
+      it 'is the same method as to_uri' do
+        link.method(:to_s).must_equal link.method(:to_uri)
       end
     end
 
