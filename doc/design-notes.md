@@ -1,6 +1,6 @@
-= HTWax Design Notes
+# HTWax Design Notes
 
-== Basic Flow
+## Basic Flow
 
 REST in a nutshell:
 
@@ -24,7 +24,7 @@ that you can get the returned Representation. The Representation
 may contain a number of Links to other resources; these can be
 used to initiate further Requests.
 
-== Plug-ins
+## Plug-ins
 
 The various parts of the basic flow can be tailored for specific uses
 by adding plug-ins. Examples:
@@ -41,7 +41,7 @@ by adding plug-ins. Examples:
 Plug-ins can maintain state between invocations, so the framework has
 plug-in instances (not classes) registered with it.
 
-== Request
+## Request
 
 Basically a way of building an HTTP request.
 
@@ -59,7 +59,7 @@ request without the Authentication header and then try again with
 it. A caching plug-in might perform a HEAD request followed by a
 GET request if the resource has changed.
 
-== Response
+## Response
 
 Represents the response received from the server. Should provide access
 to the response headers and the body without any processing having being
@@ -71,7 +71,7 @@ operation. In other words, a Representation can be completely parsed and
 a finite number of Links produced, using a reasonable amount of computing
 power and memory.
 
-== Representation
+## Representation
 
 Wraps the resource representation received from the server.
 
@@ -81,7 +81,7 @@ Wraps the resource representation received from the server.
 * Should be reusable: It should be possible for a client to hang on to
   a Representation object and use it to look up many different Links.
 
-== Link
+## Link
 
 Link objects represent sets of possible requests that could be performed.
 
@@ -96,7 +96,7 @@ Links will need to use media type plug-ins to convert some parameters into
 requests. For example, application/x-www-form-urlencoded request bodies
 will need constructing from the bound link parameters.
 
-== Media Type Plug-ins
+## Media Type Plug-ins
 
 Media type plug-ins are used primarily to extract Links from returned
 representations and to build new representations from parameters for use
@@ -110,7 +110,7 @@ type plug-ins:
   id, rel, or by the plain text content contained in the anchor. 
 * Parse a WADL description.
 
-== HTTP Request Plug-ins
+## HTTP Request Plug-ins
 
 Many HTTP request plug-ins will need to change their behaviour depending
 on the host, path or other aspect of the request.
@@ -126,7 +126,7 @@ the correct behaviour.
 HTTP compression could be performed by a plug-in as well. Add the
 correct header and decompress the response.
 
-== Configuration
+## Configuration
 
 The main point of configuration is the set of plug-ins that are available.
 Media type plug-ins should not carry much overhead: they will probably
