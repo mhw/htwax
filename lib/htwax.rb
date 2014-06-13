@@ -1,3 +1,5 @@
+require 'faraday'
+
 require 'htwax/version'
 require 'htwax/link'
 require 'htwax/request'
