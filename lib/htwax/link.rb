@@ -12,19 +12,45 @@ module HtWax
       when 1
         @request_method = :get
         @uri = args[0]
+        @options = default_options
       when 2
+        if args[1].instance_of?(Options)
+          @request_method = :get
+          @uri = args[0]
+          @options = args[1]
+        else
+          @request_method = args[0].to_sym
+          @uri = args[1]
+          @options = default_options
+        end
+      when 3
+        unless args[2].instance_of?(Options)
+          raise ArgumentError, "third argument should be Options, was #{args[2].class.name}"
+        end
         @request_method = args[0].to_sym
         @uri = args[1]
+        @options = args[2]
       else
         raise ArgumentError, "no URI passed to Link#new"
       end
+      yield @options if block_given?
       reset
+    end
+
+    def default_options
+      Options.new.tap do |opts|
+        opts.connection = Faraday.new
+      end
     end
 
     attr_reader :request_method
 
     def base
       @uri
+    end
+
+    def connection
+      @options.connection
     end
 
     def []=(key, value)

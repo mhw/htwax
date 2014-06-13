@@ -151,6 +151,58 @@ module HtWax
         l[:one].must_equal '1'
         l[:two].must_equal '2'
       end
+
+      describe 'initializing options' do
+        let(:connection) { Faraday.new }
+        let(:options) {
+          Options.new.tap do |opts|
+            opts.connection = connection
+          end
+        }
+
+        it 'can be configured using a block' do
+          l = Link.new('http://localhost/') do |opts|
+            opts.connection = connection
+          end
+          l.connection.must_be_same_as connection
+        end
+
+        it 'can be initialized with a URI' do
+          l = Link.new('https://www.google.co.uk/search', options)
+          l.base.must_equal 'https://www.google.co.uk/search'
+          l.must_be_empty
+          l.connection.must_be_same_as connection
+        end
+
+        it 'can be initialized with a URI and a hash' do
+          l = Link.new('http://localhost/', options, { one: '1', two: '2' })
+          l.base.must_equal 'http://localhost/'
+          l[:one].must_equal '1'
+          l[:two].must_equal '2'
+          l.connection.must_be_same_as connection
+        end
+
+        it 'can be initialized with an http method and a URI' do
+          l = Link.new(:get, 'http://localhost/', options)
+          l.request_method.must_equal :get
+          l.base.must_equal 'http://localhost/'
+          l.connection.must_be_same_as connection
+        end
+
+        it 'can be initialized with an http method, URI and hash' do
+          l = Link.new(:post, 'https://www.google.co.uk/search', options, lang: 'en')
+          l.request_method.must_equal :post
+          l.base.must_equal 'https://www.google.co.uk/search'
+          l[:lang].must_equal 'en'
+          l.connection.must_be_same_as connection
+        end
+
+        it 'raises an error if too many arguments passed' do
+          proc {
+            l = Link.new(:get, 'http://localhost/', options, 'extra')
+          }.must_raise(ArgumentError)
+        end
+      end
     end
 
     describe 'reset' do
