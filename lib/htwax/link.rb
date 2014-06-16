@@ -2,6 +2,8 @@ require 'uri/common'
 
 module HtWax
   class Link
+    include HasOptions
+
     def initialize(*args)
       if args.last.is_a?(Hash)
         @preset = symbolize_keys(args.pop)
@@ -37,20 +39,10 @@ module HtWax
       reset
     end
 
-    def default_options
-      Options.new.tap do |opts|
-        opts.connection = Faraday.new
-      end
-    end
-
     attr_reader :request_method
 
     def base
       @uri
-    end
-
-    def connection
-      @options.connection
     end
 
     def []=(key, value)

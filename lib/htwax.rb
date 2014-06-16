@@ -1,10 +1,11 @@
 require 'faraday'
 
 require 'htwax/version'
+require 'htwax/options'
+require 'htwax/has_options'
 require 'htwax/link'
 require 'htwax/request'
 require 'htwax/response'
-require 'htwax/options'
 
 module HtWax
   # Your code goes here...
