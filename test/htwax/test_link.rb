@@ -226,20 +226,20 @@ module HtWax
     describe 'keys' do
       it 'returns each key from the presets in order' do
         link.keys.must_equal []
-        q.keys.must_equal %i(q)
-        many.keys.must_equal %i(one two three four five)
+        q.keys.must_equal [:q]
+        many.keys.must_equal [:one, :two, :three, :four, :five]
       end
 
       it 'returns additional keys after preset keys' do
         many[:six] = '6'
         many[:seven] = '7'
-        many.keys.must_equal %i(one two three four five six seven)
+        many.keys.must_equal [:one, :two, :three, :four, :five, :six, :seven]
       end
 
       it 'returns each key only once' do
         many[:three] = 'three'
         many[:six] = '6'
-        many.keys.must_equal %i(one two three four five six)
+        many.keys.must_equal [:one, :two, :three, :four, :five, :six]
       end
 
       it 'does not return keys that have been overridden' do
@@ -250,18 +250,18 @@ module HtWax
 
     describe 'each_key' do
       it 'yields each key from the presets in order' do
-        collect_from_each_key(many).must_equal %i(one two three four five)
+        collect_from_each_key(many).must_equal [:one, :two, :three, :four, :five]
       end
 
       it 'yields each key from the presets, then any additional arguments' do
         many[:three] = 'three'
         many[:six] = '6'
-        collect_from_each_key(many).must_equal %i(one two three four five six)
+        collect_from_each_key(many).must_equal [:one, :two, :three, :four, :five, :six]
       end
 
       it 'returns an enumerator if passed no block' do
         many.each_key.must_be_kind_of Enumerator
-        many.each_key.entries.must_equal %i(one two three four five)
+        many.each_key.entries.must_equal [:one, :two, :three, :four, :five]
       end
     end
 
