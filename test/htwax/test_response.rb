@@ -5,10 +5,10 @@ module HtWax
     let(:req) { Request.new(:get, 'http://localhost/') }
 
     describe 'initialize' do
-      it 'can be initialized with a Request object and a Net::HTTPResponse' do
-        nh_resp = Struct.new(:code).new("200")
+      it 'can be initialized with a Request object and a Faraday::Response' do
+        faraday_resp = Struct.new(:status).new(200)
 
-        response = Response.new(req, nh_resp)
+        response = Response.new(req, faraday_resp)
 
         response.request.must_be_same_as req
         response.status_code.must_equal 200

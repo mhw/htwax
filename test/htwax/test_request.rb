@@ -11,15 +11,33 @@ module HtWax
       end
     end
 
-    let(:req) { Request.new(:get, 'http://localhost/') }
+    let(:stubs) do
+      Faraday::Adapter::Test::Stubs.new do |stub|
+        stub.get('/') { [200, {}, ''] }
+      end
+    end
+
+    let(:connection) do
+      Faraday.new do |builder|
+        builder.adapter :test, stubs
+      end
+    end
+
+    let(:options) do
+      Options.new.tap do |opts|
+        opts.connection = connection
+      end
+    end
+
+    let(:req) do
+      Request.new(:get, '/', options)
+    end
 
     describe 'go' do
       it 'returns the Response' do
-        stub = stub_request(:get, 'http://localhost/')
-
         response = req.go
 
-        stub.must_have_been_requested
+        stubs.verify_stubbed_calls
         response.must_be_kind_of Response
         response.request.must_be_same_as req
         response.status_code.must_equal 200
